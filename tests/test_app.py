@@ -80,7 +80,7 @@ def test_read_user_by_id(client):
     }
 
 
-def test_read_user_by_email_not_found(client):
+def test_read_user_by_id_not_found(client):
     response = client.get('/user/2')
     assert response.status_code == HTTPStatus.NOT_FOUND
     assert response.json() == {'detail': 'User not found'}
