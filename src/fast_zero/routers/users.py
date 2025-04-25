@@ -68,7 +68,7 @@ def delete_user(
 
 
 @router.get('/{id_user}', response_model=UserPublic)
-def read_user_by_id(id_user: int, session: Session = Depends(get_session)):
+def read_user_by_id(id_user: int, session: T_Session):
     user = session.scalar(select(User).where(User.id == id_user))
 
     if not user:
@@ -79,7 +79,7 @@ def read_user_by_id(id_user: int, session: Session = Depends(get_session)):
 
 
 @router.post('/', status_code=HTTPStatus.CREATED, response_model=UserPublic)
-def create_user(user: UserSchema, session: Session = Depends(get_session)):
+def create_user(user: UserSchema, session: T_Session):
     db_user = session.scalar(
         select(User).where(
             (User.username == user.username) | (User.email == user.email)

@@ -108,7 +108,7 @@ def test_create_user_with_same_username(client, user):
     response = client.post(
         '/users/',
         json={
-            'username': 'Teste',
+            'username': user.username,
             'password': 'password',
             'email': 'test@test.com',
         },
@@ -125,7 +125,7 @@ def test_create_user_with_same_email(client, user):
         json={
             'username': 'Teste2',
             'password': 'password',
-            'email': 'teste@teste.com',
+            'email': user.email,
         },
     )
     # voltou o status code correto ?
@@ -159,3 +159,27 @@ def test_token_with_nonexistent_email(client, user):
     )
     assert response.status_code == HTTPStatus.UNAUTHORIZED
     assert response.json() == {'detail': 'Could not validate credentials'}
+
+
+def test_delete_wrong_user(client, other_user, token):
+    response = client.delete(
+        f'/users/{other_user.id}',
+        headers={'Authorization': f'Bearer {token}'},
+    )
+
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert response.json() == {'detail': 'Not enough permissions'}
+
+
+def test_update_user_with_wrong_user(client, other_user, token):
+    response = client.put(
+        f'/users/{other_user.id}',
+        headers={'Authorization': f'Bearer {token}'},
+        json={
+            'username': 'bob',
+            'password': 'mynewpassword',
+            'email': 'bob@example.com',
+        },
+    )
+    assert response.status_code == HTTPStatus.FORBIDDEN
+    assert response.json() == {'detail': 'Not enough permissions'}
