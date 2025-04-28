@@ -1680,6 +1680,7 @@ files = [
 
 [package.dependencies]
 greenlet = {version = ">=1", markers = "python_version < \"3.14\" and (platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\")"}
+psycopg = {version = ">=3.0.7", optional = true, markers = "extra == \"postgresql-psycopg\""}
 typing-extensions = ">=4.6.0"
 
 [package.extras]
@@ -2249,4 +2250,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4.0"
-content-hash = "4415c29ce3dc56170290b6119a2023eed96b7aea2ceb5f656f1b5e1ce98b165b"
+content-hash = "e49110d1d360d355fc67938b1a49daeb2de6a8006dd0b74e5fb9800739b36c26"
